@@ -15,8 +15,9 @@ export const useServiceStore = create((set) => ({
         ? res
         : (res && Array.isArray(res.data) ? res.data : []);
       set({ categories: cats, loading: false });
-    } catch (err) {
-      set({ error: 'Failed to fetch categories', loading: false });
+    }catch (err) {
+      console.error("Service fetch error:", err);
+      set({ error: 'Failed to fetch services', loading: false });
     }
   },
 

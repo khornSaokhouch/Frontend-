@@ -120,18 +120,28 @@ export default function UserBookings() {
                     </span>
                   </td>
                   <td className="py-2 px-4 text-center space-x-2">
-                    {booking.status === "pending" ? (
-                      <button
-                        onClick={() => handleStatusChange(booking.id, "accepted")}
-                        disabled={updatingBookingId === booking.id}
-                        className="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded disabled:opacity-50"
-                      >
-                        Accept
-                      </button>
-                    ) : (
-                      <span className="text-gray-400 text-xs italic">No actions</span>
-                    )}
-                  </td>
+  {booking.status === "pending" ? (
+    <>
+      <button
+        onClick={() => handleStatusChange(booking.id, "accepted")}
+        disabled={updatingBookingId === booking.id}
+        className="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded disabled:opacity-50"
+      >
+        Accept
+      </button>
+      <button
+        onClick={() => handleStatusChange(booking.id, "rejected")}
+        disabled={updatingBookingId === booking.id}
+        className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1 rounded disabled:opacity-50"
+      >
+        Reject
+      </button>
+    </>
+  ) : (
+    <span className="text-gray-400 text-xs italic">No actions</span>
+  )}
+</td>
+
                 </tr>
               ))}
             </tbody>

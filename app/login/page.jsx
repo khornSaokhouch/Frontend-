@@ -22,7 +22,7 @@ const handleSubmit = async (e) => {
     if (user.role === 'admin') {
       router.push(`/admin/${user.id}/dashboard`);
     } else if (user.role === 'owner') {
-      router.push(`/owner/${user.id}/dashboard`);
+      router.push(`/owner/${user.id}/bookings`);
     } else if (user.role === 'user') {
       router.push(`/user/${user.id}/services`);
     }

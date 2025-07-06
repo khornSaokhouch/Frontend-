@@ -1,22 +1,42 @@
+"use client"
 
-"use client";
+import React, { useEffect } from "react";
+import { useUserStore } from "../../../store/useUserStore";
 
-import React from "react";
+export default function AdminUsers() {
+  const { users, fetchAllUsers, loading, error, updateUserRole, deleteUser } = useUserStore();
 
-export default function Dashboard() {
+  useEffect(() => {
+    fetchAllUsers().catch(console.error);
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      {/* Main content */}
-      <main className="flex-1 p-8">
-        <header className="mb-8">
-          <h1 className="text-3xl font-semibold text-gray-800 text-center">
-            Welcome, Admin!
-          </h1>
-          <p className="text-gray-600 mt-2 text-center">
-            Here is a quick overview of the system.
-          </p>
-        </header>
-      </main>
+    <div>
+      <h1>Users</h1>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td>{user.id}</td>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+              <td>{user.role}</td>
+              <td>
+                <button onClick={() => updateUserRole(user.id, user.role === "user" ? "owner" : "user")}>
+                  Toggle Role
+                </button>
+                <button onClick={() => deleteUser(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -62,8 +62,11 @@ export const useAuthStore = create(
           });
 
           set({ user: res.user });
-        } catch (err) {
-          set({ user: null, token: null });
+        }  catch (err) {
+          set({ user: null, token: null, error: err.message || "Login with token failed" });
+          throw err;
+        } finally {
+          set({ loading: false });
         }
       },
 

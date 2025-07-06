@@ -8,7 +8,11 @@ import { useBookingStore } from '../../../store/useBookingStore';
 export default function ServiceDetailPage() {
   const { id } = useParams();
   const { fetchServiceById } = useServiceStore();
-  const { bookService, loading: bookingLoading, error: bookingError } = useBookingStore();
+  const {
+    bookService,
+    loading: bookingLoading,
+    error: bookingError,
+  } = useBookingStore();
 
   const [service, setService] = useState(null);
   const [error, setError] = useState(null);
@@ -16,6 +20,7 @@ export default function ServiceDetailPage() {
   const [bookingDate, setBookingDate] = useState('');
   const [notes, setNotes] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+  const [validationError, setValidationError] = useState('');
 
   useEffect(() => {
     if (!id) return;
@@ -31,8 +36,11 @@ export default function ServiceDetailPage() {
   }, [id, fetchServiceById]);
 
   const handleBook = async () => {
+    setValidationError('');
+    setSuccessMsg('');
+
     if (!bookingDate) {
-      alert('Please select a booking date.');
+      setValidationError('Please select a booking date.');
       return;
     }
 
@@ -42,7 +50,7 @@ export default function ServiceDetailPage() {
       setBookingDate('');
       setNotes('');
     } catch (err) {
-      alert(`Booking failed: ${err.message}`);
+      setValidationError(err.message || 'Booking failed.');
     }
   };
 
@@ -58,6 +66,7 @@ export default function ServiceDetailPage() {
       <h2 className="text-2xl mb-3">Book This Service</h2>
 
       {successMsg && <p className="text-green-600 mb-4">{successMsg}</p>}
+      {validationError && <p className="text-red-600 mb-4">{validationError}</p>}
 
       <label className="block mb-4">
         Booking Date:
@@ -82,7 +91,7 @@ export default function ServiceDetailPage() {
 
       <button
         onClick={handleBook}
-        disabled={bookingLoading}
+        disabled={bookingLoading || !service}
         className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
       >
         {bookingLoading ? 'Booking...' : 'Confirm Booking'}

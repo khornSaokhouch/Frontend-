@@ -13,7 +13,7 @@ export default function Navbar() {
       </div>
 
       <div className="space-x-4 hidden md:flex">
-        <Link href="/" className="text-gray-700 hover:text-blue-600">Home</Link>
+        <Link href="/login" className="text-gray-700 hover:text-blue-600">logout</Link>
         {user && (
           <Link href={`/user/${user.id}/services`} className="text-gray-700 hover:text-blue-600">
             Services

@@ -5,7 +5,7 @@ export default function UserLayout({ children }) {
   return (
     <div>
       <Navbar />
-      <main>{children}</main>
+      <main  data-gptw="">{children}</main>
       <Footer />
     </div>
   );
